@@ -1,0 +1,84 @@
+[1538268827732] Using port 4461
+Server waiting for client
+Connected player with UUID Red-Perpentine
+Assigned index 0
+Server waiting for client
+Connected player with UUID Blue-Perpentine
+Assigned index 1
+Server waiting for client
+Connected player with UUID Green-Perpentine
+Assigned index 2
+Server waiting for client
+Connected player with UUID Purple-Perpentine
+Assigned index 3
+[1538268828851] Processing the map...
+[1538268829746] Initializing controllers...
+[1538268829749] Initializing the game...
+[0] Red-Perpentine (Comm open) - sending GET_READY...
+[0] Red-Perpentine (Comm open) - Ready!
+[1] Blue-Perpentine (Comm open) - sending GET_READY...
+[1] Blue-Perpentine (Comm open) - Ready!
+[2] Green-Perpentine (Comm open) - sending GET_READY...
+[2] Green-Perpentine (Comm open) - Ready!
+[3] Purple-Perpentine (Comm open) - sending GET_READY...
+[3] Purple-Perpentine (Comm open) - Ready!
+[1538268830532] Turn number: 0
+[1538268830532] ----------------------------------------------------
+[1538268831166] Turn number: 1
+[1538268831166] ----------------------------------------------------
+[1538268831798] Turn number: 2
+[1538268831798] ----------------------------------------------------
+[1538268832449] Turn number: 3
+[1538268832449] ----------------------------------------------------
+[1538268833066] Turn number: 4
+[1538268833066] ----------------------------------------------------
+[1538268833694] Turn number: 5
+[1538268833694] ----------------------------------------------------
+[1538268834300] Red-Perpentine Acquired Territory, now at  (4, 2)
+[1538268834301] Blue-Perpentine Acquired Territory, now at  (27, 4)
+[1538268834301] Green-Perpentine Acquired Territory, now at  (27, 25)
+[1538268834301] Purple-Perpentine Acquired Territory, now at  (4, 25)
+[1538268834323] Turn number: 6
+[1538268834323] ----------------------------------------------------
+[1538268834951] Turn number: 7
+[1538268834951] ----------------------------------------------------
+[1538268835578] Turn number: 8
+[1538268835578] ----------------------------------------------------
+[1538268836211] Turn number: 9
+[1538268836211] ----------------------------------------------------
+[1538268836838] Turn number: 10
+[1538268836839] ----------------------------------------------------
+[1538268837464] Turn number: 11
+[1538268837464] ----------------------------------------------------
+[1538268838069] Blue-Perpentine Acquired Territory, now at  (25, 4)
+[1538268838080] Turn number: 12
+[1538268838081] ----------------------------------------------------
+[1538268838686] Red-Perpentine Acquired Territory, now at  (6, 3)
+[1538268838686] Green-Perpentine Acquired Territory, now at  (26, 23)
+[1538268838686] Purple-Perpentine Acquired Territory, now at  (3, 23)
+[1538268838699] Turn number: 13
+[1538268838699] ----------------------------------------------------
+[1538268839319] Turn number: 14
+[1538268839319] ----------------------------------------------------
+[1538268839935] Turn number: 15
+[1538268839935] ----------------------------------------------------
+[1538268840569] Turn number: 16
+[1538268840570] ----------------------------------------------------
+[1538268838958] Turn number: 17
+[1538268838958] ----------------------------------------------------
+[1538268839561] Blue-Perpentine Acquired Territory, now at  (25, 2)
+[1538268839574] Turn number: 18
+[1538268839574] ----------------------------------------------------
+[1538268840192] Turn number: 19
+[1538268840193] ----------------------------------------------------
+[1538268840798] Red-Perpentine Acquired Territory, now at  (6, 2)
+[1538268840799] Green-Perpentine Acquired Territory, now at  (27, 23)
+[1538268840799] Purple-Perpentine Acquired Territory, now at  (4, 23)
+[1538268840814] Turn number: 20
+[1538268840814] ----------------------------------------------------
+[1538268841441] Turn number: 21
+[1538268841441] ----------------------------------------------------
+[1538268842061] Turn number: 22
+[1538268842061] ----------------------------------------------------
+[1538268842679] Turn number: 23
+[1538268842679] ----------------------------------------------------

@@ -4,67 +4,52 @@ from PythonClientAPI.game.Enums import Team
 from PythonClientAPI.game.World import World
 from PythonClientAPI.game.TileUtils import TileUtils
 
+
 class PlayerAI:
 
-    def __init__(self):
-        ''' Initialize! '''
-        self.turn_count = 0             # game turn count
-        self.target = None              # target to send unit to!
-        self.outbound = True            # is the unit leaving, or returning?
+    def __init__(self, location_manager):
+        self.location_manager = location_manager
+        self.turn_num = 0
+
+    def fill_corner(self, friendly_unit) -> tuple:
+        '''Fill the 16 squares in snake corner when starting the game. Executes move'''
+        def horz_flip(tuple_list) :
+            tuple_list = copy.deepcopy(tuple_list)
+            for entry in tuple_list :
+                entry.first = -1 * entry.first
+            return tuple_list
+
+        def vert_flip(tuple_list):
+            tuple_list = copy.deepcopy(tuple_list)
+            for entry in tuple_list:
+                entry.second = -1 * entry.second
+            return tuple_list
+
+        board_quadrant_corner = self.location_manager.get_my_board_quadrant()  #t_left corner
+        move_coords = [[(1,0), (0,1), (0,1), (-1,0), (-1,0), (-1,0), (0,-1), (0,-1), (0,-1), (0,-1)]] #All hardcoded move combos for each corner from (0,0) CW
+
+        quad_1_coords = move_coords
+        quad_2_coords = horz_flip(move_coords)
+        quad_3_coords = vert_flip(move_coords)
+        quad_4_coords = vert_flip(horz_flip(move_coords))
+
+        if (board_quadrant_corner == (1,1)) :
+            friendly_unit.move((friendly_unit.position + quad_1_coords[self.turn_num-1]))
+
+        if (board_quadrant_corner == (1, 28)):
+            friendly_unit.move((friendly_unit.position + quad_2_coords[self.turn_num - 1]))
+
+        if (board_quadrant_corner == (28, 28)):
+            friendly_unit.move((friendly_unit.position + quad_3_coords[self.turn_num - 1]))
+
+        if (board_quadrant_corner == (28, 1)):
+            friendly_unit.move((friendly_unit.position + quad_4_coords[self.turn_num - 1]))
+
 
     def do_move(self, world, friendly_unit, enemy_units):
-        '''
-        This method is called every turn by the game engine.
-        Make sure you call friendly_unit.move(target) somewhere here!
-
-        Below, you'll find a very rudimentary strategy to get you started.
-        Feel free to use, or delete any part of the provided code - Good luck!
-
-        :param world: world object (more information on the documentation)
-            - world: contains information about the game map.
-            - world.path: contains various pathfinding helper methods.
-            - world.util: contains various tile-finding helper methods.
-            - world.fill: contains various flood-filling helper methods.
-
-        :param friendly_unit: FriendlyUnit object
-        :param enemy_units: list of EnemyUnit objects
-        '''
-
-        # increment turn count
-        self.turn_count += 1
-
-        # if unit is dead, stop making moves.
-        if friendly_unit.status == 'DISABLED':
-            print("Turn {0}: Disabled - skipping move.".format(str(self.turn_count)))
-            self.target = None
-            self.outbound = True
+        self.turn_num += 1
+        if (self.turn_num < 10) :
+            self.fill_corner(friendly_unit)
             return
-
-        # if unit reaches the target point, reverse outbound boolean and set target back to None
-        if self.target is not None and friendly_unit.position == self.target.position:
-            self.outbound = not self.outbound
-            self.target = None
-
-        # if outbound and no target set, set target as the closest capturable tile at least 1 tile away from your territory's edge.
-        if self.outbound and self.target is None:
-            edges = [tile for tile in world.util.get_friendly_territory_edges()]
-            avoid = []
-            for edge in edges:
-                avoid += [pos for pos in world.get_neighbours(edge.position).values()]
-            self.target = world.util.get_closest_capturable_territory_from(friendly_unit.position, avoid)
-
-        # else if inbound and no target set, set target as the closest friendly tile
-        elif not self.outbound and self.target is None:
-            self.target = world.util.get_closest_friendly_territory_from(friendly_unit.position, None)
-
-        # set next move as the next point in the path to target
-        next_move = world.path.get_shortest_path(friendly_unit.position, self.target.position, friendly_unit.snake)[0]
-
-        # move!
-        friendly_unit.move(next_move)
-        print("Turn {0}: currently at {1}, making {2} move to {3}.".format(
-            str(self.turn_count),
-            str(friendly_unit.position),
-            'outbound' if self.outbound else 'inbound',
-            str(self.target.position)
-        ))
+        else:
+            friendly_unit.move(friendly_unit.position + (0,-1))
