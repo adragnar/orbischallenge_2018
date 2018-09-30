@@ -6,16 +6,16 @@ from PythonClientAPI.game.TileUtils import TileUtils
 
 class LocationManager:
 
-    def __init__(self, enemy_positions, curr_position):
-        self.enemy_positions = enemy_positions
-        self.curr_position = curr_position
-        if curr_position[0] <=14 and curr_position[1] <= 14:
+    def __init__(self, enemy_list, curr_player):
+        self.enemy_positions = [x.position for x in enemy_list]
+        self.curr_position = curr_player.position
+        if self.curr_position[0] <=14 and self.curr_position[1] <= 14:
             self.corner = (4,4)
-        elif curr_position[0] <=14 and curr_position[1] > 14:
+        elif self.curr_position[0] <=14 and self.curr_position[1] > 14:
             self.corner = (4,25)
-        elif curr_position[0] > 14 and curr_position[1] <= 14:
+        elif self.curr_position[0] > 14 and self.curr_position[1] <= 14:
             self.corner = (25,4)
-        elif curr_position[0] > 14 and curr_position[1] > 14:
+        elif self.curr_position[0] > 14 and self.curr_position[1] > 14:
             self.corner = (25, 25)
 
     def get_my_board_quadrant(self):
