@@ -7,8 +7,7 @@ from PythonClientAPI.game.TileUtils import TileUtils
 
 class PlayerAI:
 
-    def __init__(self, location_manager):
-        self.location_manager = location_manager
+    def __init__(self):
         self.turn_num = 0
 
     def fill_corner(self, friendly_unit) -> tuple:
