@@ -4,6 +4,8 @@ from PythonClientAPI.game.Enums import Team
 from PythonClientAPI.game.World import World
 from PythonClientAPI.game.TileUtils import TileUtils
 
+import numpy as np
+
 class LocationManager:
 
     def __init__(self, enemy_list, curr_player):
@@ -22,11 +24,11 @@ class LocationManager:
         if self.corner[0] <=14 and self.corner[1] <= 14:
             return (1, 1)
         elif self.corner[0] <=14 and self.corner[1] > 14:
-            corner = (1, 28)
+            return (1, 28)
         elif self.corner[0] >14 and self.corner[1] <= 14:
-            corner = (28,1)
+            return (28,1)
         elif self.corner[0] >14 and self.corner[1] > 14:
-            corner = (28, 28)
+            return (28, 28)
 
     def update(self, friendly_unit, enemy_units):
         self.curr_position = friendly_unit.position
@@ -49,46 +51,41 @@ class PlayerAI:
 
     def __init__(self):
         self.turn_num = 0
+        self.location_manager = None
 
-    def fill_corner(self, friendly_unit) -> tuple:
+    def fill_corner(self, friendly_unit):
         '''Fill the 16 squares in snake corner when starting the game. Executes move'''
-        def horz_flip(tuple_list) :
-            tuple_list = copy.deepcopy(tuple_list)
-            for entry in tuple_list :
-                entry.first = -1 * entry.first
-            return tuple_list
-
-        def vert_flip(tuple_list):
-            tuple_list = copy.deepcopy(tuple_list)
-            for entry in tuple_list:
-                entry.second = -1 * entry.second
-            return tuple_list
 
         board_quadrant_corner = self.location_manager.get_my_board_quadrant()  #t_left corner
-        move_coords = [[(1,0), (0,1), (0,1), (-1,0), (-1,0), (-1,0), (0,-1), (0,-1), (0,-1), (0,-1)]] #All hardcoded move combos for each corner from (0,0) CW
+        top_left_coords = [(4,3), (4,2), (4,1), (3,1), (2,1), (1,1), (1,2), (1,3), (1,4), (2,4)]
+        top_right_coords = [(25,3), (25,2), (25,1), (26,1), (27,1), (28,1), (28,2), (28,3), (28,4), (27,4)]
+        bottom_left_coords = [(3,25), (2,25), (1,25), (1, 26), (1,27), (1,28), (2,28), (3,28), (4,28), (4, 27)]
+        bottom_right_coords = [(25,25), (26,25), (27,25), (28,25)]
 
-        quad_1_coords = move_coords
-        quad_2_coords = horz_flip(move_coords)
-        quad_3_coords = vert_flip(move_coords)
-        quad_4_coords = vert_flip(horz_flip(move_coords))
-
+        print(board_quadrant_corner)
         if (board_quadrant_corner == (1,1)) :
-            friendly_unit.move((friendly_unit.position + quad_1_coords[self.turn_num-1]))
+            next_step = top_left_coords[self.turn_num-1]
+            friendly_unit.move(next_step)
 
-        if (board_quadrant_corner == (1, 28)):
-            friendly_unit.move((friendly_unit.position + quad_2_coords[self.turn_num - 1]))
+        elif (board_quadrant_corner == (1, 28)):
+            next_step = bottom_left_coords[self.turn_num - 1]
+            friendly_unit.move(next_step)
 
-        if (board_quadrant_corner == (28, 28)):
-            friendly_unit.move((friendly_unit.position + quad_3_coords[self.turn_num - 1]))
+        elif (board_quadrant_corner == (28, 28)):
+            pass
 
-        if (board_quadrant_corner == (28, 1)):
-            friendly_unit.move((friendly_unit.position + quad_4_coords[self.turn_num - 1]))
+        elif (board_quadrant_corner == (28, 1)):
+            next_step = top_right_coords[self.turn_num - 1]
+            friendly_unit.move(next_step)
 
 
     def do_move(self, world, friendly_unit, enemy_units):
         self.turn_num += 1
-        if (self.turn_num < 10) :
+        if self.location_manager == None :
+            self.location_manager = LocationManager(enemy_units, friendly_unit)
+
+        if (self.turn_num < 11) :
             self.fill_corner(friendly_unit)
-            return
-        else:
-            friendly_unit.move(friendly_unit.position + (0,-1))
+
+
+
