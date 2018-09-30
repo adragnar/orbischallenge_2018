@@ -71,9 +71,6 @@ class PlayerAI:
             next_step = bottom_left_coords[self.turn_num - 1]
             friendly_unit.move(next_step)
 
-        elif (board_quadrant_corner == (28, 28)):
-            pass
-
         elif (board_quadrant_corner == (28, 1)):
             next_step = top_right_coords[self.turn_num - 1]
             friendly_unit.move(next_step)
