@@ -49,6 +49,11 @@ class PlayerAI:
 
     def __init__(self):
         self.turn_num = 0
+        self.location_manager = None
+
+    def do_move(self, world, friendly_unit, enemy_units):
+        friendly_unit.move(world.path.get_next_point_in_shortest_path(friendly_unit.position, (14, 14)))
+        friendly_unit.move(world.path.get_next_point_in_shortest_path(friendly_unit.position, (1, 1)))
 
     def fill_corner(self, friendly_unit) -> tuple:
         '''Fill the 16 squares in snake corner when starting the game. Executes move'''
@@ -92,3 +97,5 @@ class PlayerAI:
             return
         else:
             friendly_unit.move(friendly_unit.position + (0,-1))
+
+
