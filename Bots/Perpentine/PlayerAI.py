@@ -5,6 +5,7 @@ from PythonClientAPI.game.World import World
 from PythonClientAPI.game.TileUtils import TileUtils
 
 import numpy as np
+import random
 
 class LocationManager:
 
@@ -72,6 +73,7 @@ class PlayerAI:
     def __init__(self):
         self.turn_num = 0
         self.location_manager = None
+        self.expansion_direction = None
 
     def fill_corner(self, friendly_unit):
         '''Fill the 16 squares in snake corner when starting the game. Executes move'''
@@ -99,6 +101,18 @@ class PlayerAI:
             next_step = bottom_right_coords[self.turn_num - 1]
             friendly_unit.move(next_step)
 
+    def choose_expansion_direction(self, world, friendly_unit):
+        '''Randomly return direction in which snake should expand '''
+        if self.expansion_direction == None :
+            return self.location_manager.get_expansion_directions[random.randrange[0,2,1]]
+
+        elif self.expansion_direction == self.location_manager.get_expansion_directions[0] :
+            self.expansion_direction = self.location_manager.get_expansion_directions[1]
+
+        elif self.expansion_direction == self.location_manager.get_expansion_directions[1] :
+            self.expansion_direction = self.location_manager.get_expansion_directions[0]
+
+        return self.expansion_direction
 
     def do_move(self, world, friendly_unit, enemy_units):
         self.turn_num += 1
