@@ -80,7 +80,7 @@ class PlayerAI:
         top_left_coords = [(4,3), (4,2), (4,1), (3,1), (2,1), (1,1), (1,2), (1,3), (1,4), (2,4)]
         top_right_coords = [(25,3), (25,2), (25,1), (26,1), (27,1), (28,1), (28,2), (28,3), (28,4), (27,4)]
         bottom_left_coords = [(3,25), (2,25), (1,25), (1, 26), (1,27), (1,28), (2,28), (3,28), (4,28), (4, 27)]
-        bottom_right_coords = [(25,25), (26,25), (27,25), (28,25)]
+        bottom_right_coords = [(25,26), (25,27), (25,28), (26,28), (27,28), (28,28), (28,27), (28,26), (28,25), (27,25)]
 
         print(board_quadrant_corner)
         if (board_quadrant_corner == (1,1)) :
@@ -98,6 +98,10 @@ class PlayerAI:
             next_step = top_right_coords[self.turn_num - 1]
             friendly_unit.move(next_step)
 
+        elif (board_quadrant_corner == (28, 28)):
+            next_step = bottom_right_coords[self.turn_num - 1]
+            friendly_unit.move(next_step)
+
 
     def do_move(self, world, friendly_unit, enemy_units):
         self.turn_num += 1
@@ -106,6 +110,10 @@ class PlayerAI:
 
         if (self.turn_num < 11) :
             self.fill_corner(friendly_unit)
+        elif friendly_unit.position in friendly_unit.territory and friendly_unit.position != self.location_manager.corner:
+            friendly_unit.move(world.path.get_next_point_in_shortest_path(friendly_unit.position, self.location_manager.corner))
+        else:
+            friendly_unit.move(friendly_unit.position + (0,-1))
 
         
 
