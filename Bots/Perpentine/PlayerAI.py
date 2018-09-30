@@ -20,6 +20,23 @@ class LocationManager:
         elif self.curr_position[0] > 14 and self.curr_position[1] > 14:
             self.corner = (25, 25)
 
+        #set expansion directions
+        if (self.corner == (4,4)) :
+            self.expand_dir_x = "right"
+            self.expand_dir_y = "down"
+
+        elif (self.corner == (4, 25)):
+            self.expand_dir_x = "right"
+            self.expand_dir_y = "up"
+
+        elif (self.corner == (25, 4)):
+            self.expand_dir_x = "left"
+            self.expand_dir_y = "down"
+
+        elif (self.corner == (25, 25)):
+            self.expand_dir_x = "left"
+            self.expand_dir_y = "up"
+
     def get_my_board_quadrant(self):
         if self.corner[0] <=14 and self.corner[1] <= 14:
             return (1, 1)
@@ -46,6 +63,9 @@ class LocationManager:
         points = friendly_unit.body
         li_ = [world.path.get_shortest_path_distance(x) for x in self.enemy_positions]
         return min(li_)
+
+    def get_expansion_directions(self):
+        return (self.expand_dir_x, self.expand_dir_y)
 
 class PlayerAI:
 
@@ -91,6 +111,8 @@ class PlayerAI:
             friendly_unit.move(world.path.get_next_point_in_shortest_path(friendly_unit.position, self.location_manager.corner))
         else:
             friendly_unit.move(friendly_unit.position + (0,-1))
+
+        
 
 
 
